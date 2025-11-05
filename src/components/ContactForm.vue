@@ -40,6 +40,85 @@
       />
       <ErrorMessage name="phone" class="error-feedback" />
     </div>
+    <div class="form-group">
+      <label class="d-block mb-2"><strong>Tình trạng gia đình</strong></label>
+
+      <div class="btn-group" role="group" aria-label="Tình trạng gia đình">
+        <Field
+          type="radio"
+          class="btn-check"
+          name="tinhTrangGiaDinh"
+          id="tt-doc-than"
+          autocomplete="off"
+          value="doc_than"
+          v-model="contactLocal.tinhTrangGiaDinh"
+        />
+        <label class="btn btn-outline-primary" for="tt-doc-than"
+          >Độc thân</label
+        >
+
+        <Field
+          type="radio"
+          class="btn-check"
+          name="tinhTrangGiaDinh"
+          id="tt-gia-dinh"
+          autocomplete="off"
+          value="gia_dinh"
+          v-model="contactLocal.tinhTrangGiaDinh"
+        />
+        <label class="btn btn-outline-primary" for="tt-gia-dinh"
+          > Có Gia đình</label
+        >
+      </div>
+
+      <ErrorMessage
+        name="tinhTrangGiaDinh"
+        class="error-feedback d-block mt-1"
+      />
+    </div>
+    <div class="form-group">
+      <label class="d-block mb-2"
+        ><strong>Sở thích</strong>
+        <span class="text-muted">(chọn nhiều)</span></label
+      >
+      <div class="form-check">
+        <Field
+          class="form-check-input"
+          type="checkbox"
+          id="st-di-ca-phe"
+          value="di_ca_phe"
+          v-model="contactLocal.soThich"
+          name="soThich"
+        />
+        <label for="st-di-ca-phe" class="form-check-label">Đi cà phê</label>
+      </div>
+
+      <div class="form-check">
+        <Field
+          class="form-check-input"
+          type="checkbox"
+          id="st-xem-phim"
+          value="xem_phim"
+          v-model="contactLocal.soThich"
+          name="soThich"
+        />
+        <label for="st-xem-phim" class="form-check-label">Xem phim</label>
+      </div>
+
+      <div class="form-check">
+        <Field
+          class="form-check-input"
+          type="checkbox"
+          id="st-choi-dan"
+          value="choi_dan"
+          v-model="contactLocal.soThich"
+          name="soThich"
+        />
+        <label for="st-choi-dan" class="form-check-label">Chơi đàn</label>
+      </div>
+
+      <ErrorMessage name="soThich" class="error-feedback d-block mt-1" />
+    </div>
 
     <div class="form-group form-check">
       <input
@@ -101,6 +180,14 @@ export default {
           /((09|03|07|08|05)+([0-9]{8})\b)/g,
           "Số điện thoại không hợp lệ."
         ),
+      tinhTrangGiaDinh: yup
+        .string()
+        .oneOf(["doc_than", "gia_dinh"], "Chọn tình trạng hợp lệ.")
+        .required("Vui lòng chọn tình trạng gia đình."),
+      soThich: yup
+        .array()
+        .of(yup.string().oneOf(["di_ca_phe", "xem_phim", "choi_dan"]))
+        .min(1, "Chọn ít nhất 1 sở thích."),
     });
     return {
       contactLocal: this.contact,
